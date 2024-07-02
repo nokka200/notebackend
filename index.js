@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const app = express();
+const Note = require('./models/note')
 
 app.use(express.json());
 app.use(cors());
@@ -51,8 +52,9 @@ app.get('/', (request, response) => {
 });
 
 app.get('/api/notes', (request, response) => {
-  console.log('Something happened!')
-  response.json(notes);
+  Note.find({}).then(notes => {
+    response.json(notes)
+  });
 });
 
 app.get('/api/notes/:id', (request, response) => {
