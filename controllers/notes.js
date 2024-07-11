@@ -1,12 +1,21 @@
+/*
+Tiedosto eksporttaa moduulin käyttäjille määritellyn routerin.
+Kaikki määriteltävät routet liitetään router-olioon, samaan tapaan kuin aiemmassa versiossa routet liitettiin sovellusta edustavaan olioon.
+
+Huomionarvoinen seikka routejen määrittelyssä on se, että polut ovat typistyneet. Aiemmin määrittelimme esim.
+*/
+
 const notesRouter = require('express').Router()
 const Note = require('../models/note')
 
+// Haetaan kaikki muistiinpanot tietokannasta
 notesRouter.get('/', (request, response) => {
   Note.find({}).then(notes => {
     response.json(notes)
   })
 })
 
+// Haetaan yksittäinen muistiinpano tietokannasta
 notesRouter.get('/:id', (request, response, next) => {
   Note.findById(request.params.id)
     .then(note => {
@@ -19,6 +28,7 @@ notesRouter.get('/:id', (request, response, next) => {
     .catch(error => next(error))
 })
 
+// Lisätään uusi muistiinpano tietokantaan
 notesRouter.post('/', (request, response, next) => {
   const body = request.body
 
@@ -34,6 +44,7 @@ notesRouter.post('/', (request, response, next) => {
     .catch(error => next(error))
 })
 
+// Poistetaan muistiinpano tietokannasta
 notesRouter.delete('/:id', (request, response, next) => {
   Note.findByIdAndDelete(request.params.id)
     .then(() => {
