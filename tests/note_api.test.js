@@ -16,7 +16,6 @@ const Note = require('../models/note')
 beforeEach(async () => {
   await Note.deleteMany({})
 
-
   let noteObject = new Note(helper.initialNotes[0])
   await noteObject.save()
 
