@@ -20,7 +20,8 @@ usersRouter.post('/', async (request, response) => {
 })
 
 usersRouter.get('/', async (request, response) => {
-  const users = await User.find({})
+  const users = await User
+    .find({}).populate('notes', { content: 1, important: 1 }) // Lisätään notes hakutulokseen ja rajataan content ja important kentät.
   response.json(users)
 })
 
