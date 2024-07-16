@@ -7,6 +7,7 @@ Huomionarvoinen seikka routejen määrittelyssä on se, että polut ovat typisty
 
 const notesRouter = require('express').Router()
 const Note = require('../models/note')
+const User = require('../models/user')
 
 // Haetaan kaikki muistiinpanot tietokannasta
 notesRouter.get('/', async (request, response) => {
@@ -27,14 +28,19 @@ notesRouter.get('/:id', async (request, response) => {
 // Lisätään uusi muistiinpano tietokantaan
 notesRouter.post('/', async (request, response) => {
   const body = request.body
+  const user = await User.findById(body.userId)
 
   const note = new Note({
     content: body.content,
-    important: body.important || false,
+    important: body.important === undefined ? false : body.important,
+    user: user._id
   })
 
   const savedNote = await note.save()
-  response.status(201).json(savedNote)
+  user.notes = user.notes.concat(savedNote._id)
+  await user.save()
+
+  response.json(savedNote)
 })
 
 // Poistetaan muistiinpano tietokannasta
