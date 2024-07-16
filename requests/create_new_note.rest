@@ -1,7 +1,8 @@
 POST http://localhost:3001/api/notes/
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InJvb3QiLCJpZCI6IjY2OTUxODAxNmFlNzlmOWM5MDlmNjg1MCIsImlhdCI6MTcyMTEyMTM3OX0.08fRwNVi15AIbzV1Gjw28-4Z_LktzSYH0wajfwB5JBQ
 
 {
-    "content": "kek",
+    "content": "spa ja token based authentication",
     "important": true
 }
